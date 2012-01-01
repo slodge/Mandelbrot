@@ -1,0 +1,5 @@
+﻿This project is distributed under creative commons attribution license.
+
+Several .edu websites were used in producing this code - thanks to all the educators for their time in explaining Mandelbrot and Julia online!
+
+Stuart
