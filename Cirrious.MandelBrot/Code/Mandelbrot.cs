@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+// TO find interesting points try http://math.hws.edu/xJava/MB/ (use overview window)
 namespace Cirrious.MandelBrot.Code
 {
     public class Mandelbrot
     {
         private const int BASE_HEIGHT = 800;
         private const int BASE_WIDTH = 480;
+
+        private const double ITERATION_MAX = 150.0;
 
         private double FINISH_SCALE = 2;
         private double HEIGHT;
@@ -58,7 +61,6 @@ namespace Cirrious.MandelBrot.Code
                                     () => ColorArrayGeneric(1,0,0),
                                     () => ColorArrayGeneric(0,1,0),
                                     () => ColorArrayGeneric(0,0,1),
-                                    () => ColorArrayGeneric(1,0,0),
                                     () => ColorArrayGeneric(1,0,0.5),
                                     () => ColorArrayGeneric(0,1.0,0.5),
                                     () => ColorArrayGeneric(0.5,1,0),
@@ -74,20 +76,20 @@ namespace Cirrious.MandelBrot.Code
             get { return _bitmap; }
         }
 
-         private void ColorArrayHSVGeneric(double startH, double endH, double s, double v)
+        private void ColorArrayHSVGeneric(double startH, double endH, double s, double v)
         {
             _colors = new List<Color>();
-            double increment = (endH - startH)/500;
+            double increment = (endH - startH) / 500;
             for (int i = 0; i < 500; i++)
-                _colors.Add(FromHSV(i*increment + startH, s,v));
+                _colors.Add(FromHSV(i * increment + startH, s, v));
         }
 
         private static Color FromHSV(double h, double s, double v)
         {
             // see http://www.tech-faq.com/hsv.html
             int r, g, b;
-            HSVHelper.HsvToRgb(h,s,v, out r, out g, out b);
-            return Color.FromArgb(255, (byte) (r), (byte) (g), (byte) (b));
+            HSVHelper.HsvToRgb(h, s, v, out r, out g, out b);
+            return Color.FromArgb(255, (byte)(r), (byte)(g), (byte)(b));
         }
 
         private void ColorArrayOne()
@@ -95,8 +97,8 @@ namespace Cirrious.MandelBrot.Code
             _colors = new List<Color>();
             for (int i = 0; i < 128; i++)
                 _colors.Add(Color.FromArgb(255, (byte)(255 - (i * 2)), (byte)(255 - (i * 2)), 0));
-            for (int i = 0; i < 128; i++)
-                _colors.Add(Color.FromArgb(255, (byte)(i * 2), (byte)(i * 2), 0));
+            //for (int i = 0; i < 128; i++)
+            //    _colors.Add(Color.FromArgb(255, (byte)(i * 2), (byte)(i * 2), 0));
         }
 
         private void ColorArrayTwo()
@@ -181,17 +183,17 @@ namespace Cirrious.MandelBrot.Code
             _colors = new List<Color>();
             for (int i = 0; i < 128; i++)
                 _colors.Add(Color.FromArgb(255, (byte)(255 - (i * 2)), 0, (byte)(255 - (i * 2))));
-            for (int i = 0; i < 128; i++)
-                _colors.Add(Color.FromArgb(255, (byte)(i * 2), 0, (byte)(i * 2)));
+            //for (int i = 0; i < 128; i++)
+            //    _colors.Add(Color.FromArgb(255, (byte)(i * 2), 0, (byte)(i * 2)));
         }
 
         private void ColorArrayFive()
         {
             _colors = new List<Color>();
             for (int i = 0; i < 128; i++)
-                _colors.Add(Color.FromArgb(255, 0, (byte) (255 - (i*2)), (byte) (255 - (i*2))));
-            for (int i = 0; i < 128; i++)
-                _colors.Add(Color.FromArgb(255, 0, (byte) (i*2), (byte) (i*2)));
+                _colors.Add(Color.FromArgb(255, 0, (byte)(255 - (i * 2)), (byte)(255 - (i * 2))));
+            //for (int i = 0; i < 128; i++)
+            //    _colors.Add(Color.FromArgb(255, 0, (byte) (i*2), (byte) (i*2)));
         }
 
         private void ColorArraySix()
@@ -199,8 +201,8 @@ namespace Cirrious.MandelBrot.Code
             _colors = new List<Color>();
             for (int i = 0; i < 128; i++)
                 _colors.Add(Color.FromArgb(255, (byte)(255 - (i * 2)), (byte)(255 - (i * 2)), (byte)(255 - (i * 2))));
-            for (int i = 0; i < 128; i++)
-                _colors.Add(Color.FromArgb(255, (byte)(i * 2), (byte)(i * 2), (byte)(i * 2)));
+            //for (int i = 0; i < 128; i++)
+            //    _colors.Add(Color.FromArgb(255, (byte)(i * 2), (byte)(i * 2), (byte)(i * 2)));
         }
 
         private void ColorArrayGeneric(double red, double green, double blue)
@@ -208,8 +210,8 @@ namespace Cirrious.MandelBrot.Code
             _colors = new List<Color>();
             for (int i = 0; i < 128; i++)
                 _colors.Add(Color.FromArgb(255, (byte)(red * (255 - (i * 2))), (byte)(green * (255 - (i * 2))), (byte)(blue * (255 - (i * 2)))));
-            for (int i = 0; i < 128; i++)
-                _colors.Add(Color.FromArgb(255, (byte)(red * i * 2), (byte)(green * i * 2), (byte)(blue * i * 2)));
+            //for (int i = 0; i < 128; i++)
+            //    _colors.Add(Color.FromArgb(255, (byte)(red * i * 2), (byte)(green * i * 2), (byte)(blue * i * 2)));
         }
 
         private void NextColorArray()
@@ -303,7 +305,91 @@ namespace Cirrious.MandelBrot.Code
                                                                      0.10931625,
                                                                      0.634268188,
                                                                      0.635635375
-                                                                 }, 
+                                                             }, 
+                                                             new double[]
+                                                                 {
+-0.95976,
+-0.44651,
+-0.51724,
+-0.13362,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+-0.89694,
+-0.82880,
+-0.28442,
+-0.23349,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+-0.87306,
+-0.86155,
+-0.24684,
+-0.23823,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+-0.86456,
+-0.86198,
+-0.24157,
+-0.23965,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+
+-0.86432,
+-0.86436,
+-0.24148,
+-0.24095,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+
+0.34366,
+0.34781,
+0.38979,
+0.39289,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+
+-0.07969,
+-0.07948,
+0.86352,
+0.86368,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+
+-0.084277,
+-0.06760,
+0.85675,
+0.86922,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+
+0.13953,
+0.20419,
+-0.60390,
+-0.55558,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+
+0.17786,
+0.18578,
+-0.58574,
+-0.57982,
+                                                             }, 
+                                                             new double[]
+                                                                 {
+
+0.18225,
+0.18404,
+-0.58257,
+-0.58123,
+                                                                 },
                                              };
 
         private void NextSettingsSelection()
@@ -321,8 +407,8 @@ namespace Cirrious.MandelBrot.Code
             NextColorArray();
             NextSettingsSelection();
 
-            SCALE_DOWN = 64;
-            SCALE_UP = 64;
+            SCALE_DOWN = 8;
+            SCALE_UP = 8;
             FINISH_SCALE = 1;
 
             //text_settings.Text = "x in %.4f,%.4f; y in %.4f,%.4f" % [$xmin,$xmax,$ymin,$ymax]
@@ -343,14 +429,14 @@ namespace Cirrious.MandelBrot.Code
                 return;
             }
 
-            SCALE_DOWN = SCALE_DOWN/8;
-            SCALE_UP = SCALE_UP/8;
+            SCALE_DOWN = SCALE_DOWN / 8;
+            SCALE_UP = SCALE_UP / 8;
 
-            WIDTH = BASE_WIDTH/SCALE_DOWN;
-            HEIGHT = BASE_HEIGHT/SCALE_DOWN;
+            WIDTH = BASE_WIDTH / SCALE_DOWN;
+            HEIGHT = BASE_HEIGHT / SCALE_DOWN;
 
-            _xIncrement = (_xmax - _xmin)/WIDTH;
-            _yIncrement = (_ymax - _ymin)/HEIGHT;
+            _xIncrement = (_xmax - _xmin) / WIDTH;
+            _yIncrement = (_ymax - _ymin) / HEIGHT;
 
             _x = _xmin;
             _s = 0;
@@ -367,13 +453,18 @@ namespace Cirrious.MandelBrot.Code
             rec.Fill = new SolidColorBrush(color);
             canvas.Children.Add(rec);
             */
-            _bitmap.FillRectangle((int) (x*SCALE_UP), (int) (y*SCALE_UP), (int) ((x + 1)*SCALE_UP),
-                                  (int) ((y + 1)*SCALE_UP), color);
+            _bitmap.FillRectangle((int)(x * SCALE_UP), (int)(y * SCALE_UP), (int)((x + 1) * SCALE_UP),
+                                  (int)((y + 1) * SCALE_UP), color);
+        }
+
+        public bool IsComplete
+        {
+            get { return _s >= WIDTH; }
         }
 
         public void NextLine()
         {
-            if (_s >= WIDTH)
+            if (IsComplete)
             {
                 NextLevel();
                 return;
@@ -386,19 +477,19 @@ namespace Cirrious.MandelBrot.Code
                 double x1 = 0.0;
                 double y1 = 0.0;
                 double looper = 0.0;
-                while (looper < 100 && x1*x1 + y1*y1 < 4)
+                while (looper < ITERATION_MAX && x1 * x1 + y1 * y1 < 4)
                 {
                     looper = looper + 1.0;
-                    double xx = (x1*x1) - (y1*y1) + _x;
-                    y1 = 2*x1*y1 + y;
+                    double xx = (x1 * x1) - (y1 * y1) + _x;
+                    y1 = 2 * x1 * y1 + y;
                     x1 = xx;
                 }
 
                 // Get the percent of where the looper stopped
-                double perc = looper/(100.0);
+                double perc = looper / (ITERATION_MAX);
 
-                // Get that part of a 255 scale
-                var val = (int) Math.Floor(perc*255);
+                // Get that part of a _colors.Count - 1 scale
+                var val = (int)Math.Floor(perc * (_colors.Count - 1));
 
                 // Use that number to set the color
                 SetPixel(_s, z, _colors[val]);

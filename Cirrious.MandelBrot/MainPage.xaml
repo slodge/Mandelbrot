@@ -21,12 +21,24 @@
         </Grid.RowDefinitions>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="0" Grid.RowSpan="2" Margin="0"></Grid>
+        <Grid x:Name="ContentPanel" Grid.Row="0" Grid.RowSpan="2" Margin="0">
+            <MediaElement Height="0" Width="0" Source="/Music/Zero_project_Zero_project_02_Labyrinth.mp3" AutoPlay="True"
+                          MediaEnded="MediaElement_MediaEnded"/>
+        </Grid>
         
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28" Opacity="0.7">
             <TextBlock x:Name="PageTitle" Text="Mandelbrot" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
             <TextBlock x:Name="ApplicationTitle" Text="by Cirrious" Style="{StaticResource PhoneTextNormalStyle}"/>
+        </StackPanel>
+        
+        <StackPanel x:Name="StackPanelA" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Opacity="0.5">
+            <TextBlock HorizontalAlignment="Right" Text="A Creative Commons Project for:"></TextBlock>
+            <HyperlinkButton HorizontalAlignment="Right" Content="AlphaLabs" Margin="0,0,-10,0" Click="HyperlinkButtonAlpha_Click"></HyperlinkButton>
+        </StackPanel>
+        <StackPanel x:Name="StackPanelB" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Opacity="0.5">
+            <TextBlock HorizontalAlignment="Right" Text="Creative Commons Audio:"></TextBlock>
+            <HyperlinkButton HorizontalAlignment="Right" Content="Labyrinth by zero-project" Margin="0,0,-10,0" Click="HyperlinkButton_Click"></HyperlinkButton>
         </StackPanel>
     </Grid>
  
